@@ -30,12 +30,6 @@ subprojects {
     dependencies {
         implementation 'io.projectreactor:reactor-core'
         implementation 'io.projectreactor.addons:reactor-extra'
-        implementation 'org.springframework.boot:spring-boot-starter-validation'
-        implementation 'org.springframework.boot:spring-boot-starter-data-mongodb-reactive'
-        implementation 'org.springdoc:springdoc-openapi-starter-webflux-ui:2.6.0'
-        implementation('org.springframework.boot:spring-boot-starter-webflux') {
-            exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
-        }
 
         testImplementation 'io.projectreactor.tools:blockhound-junit-platform:1.0.13.RELEASE'
 

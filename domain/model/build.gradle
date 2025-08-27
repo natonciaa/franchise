@@ -1,0 +1,6 @@
+group 'co.com.seti'
+version '1.0-SNAPSHOT'
+
+dependencies {
+    testImplementation('junit:junit:4.13.2')
+}
