@@ -1,9 +1,12 @@
 package co.com.seti.api;
 
+import co.com.seti.api.dto.AddProductReq;
 import co.com.seti.model.branch.Branch;
 import co.com.seti.model.franchise.Franchise;
 import co.com.seti.usecase.addbranch.AddBranchUseCase;
-import co.com.seti.usecase.createfranchiseuc.CreateFranchiseUseCase;
+import co.com.seti.usecase.addproduct.AddProductUseCase;
+import co.com.seti.usecase.createfranchise.CreateFranchiseUseCase;
+import co.com.seti.usecase.deleteproduct.DeleteProductUseCase;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.reactive.function.server.ServerRequest;
@@ -17,7 +20,8 @@ import java.net.URI;
 public class Handler {
     private final CreateFranchiseUseCase createFranchiseUC;
     private final AddBranchUseCase addBranchUC;
-
+    private final AddProductUseCase addProductUC;
+    private final DeleteProductUseCase deleteProductUC;
     public Mono<ServerResponse> create(ServerRequest req) {
         return req.bodyToMono(Franchise.class)
                 .flatMap(r -> createFranchiseUC.create(r.getName()))
@@ -35,4 +39,21 @@ public class Handler {
                 .onErrorResume(e -> ServerResponse.badRequest().bodyValue(e.getMessage()));
     }
 
+    public Mono<ServerResponse> addProduct(ServerRequest req) {
+        String fid = req.pathVariable("franchiseId");
+        String bid = req.pathVariable("branchId");
+        return req.bodyToMono(AddProductReq.class)
+                .flatMap(r -> addProductUC.create(fid, bid, r.name(), r.stock()))
+                .flatMap(fr -> ServerResponse.ok().bodyValue(fr))
+                .onErrorResume(e -> ServerResponse.badRequest().bodyValue(e.getMessage()));
+    }
+
+    public Mono<ServerResponse> deleteProduct(ServerRequest req) {
+        String fid = req.pathVariable("franchiseId");
+        String bid = req.pathVariable("branchId");
+        String pid = req.pathVariable("productId");
+        return deleteProductUC.delete(fid, bid, pid)
+                .then(ServerResponse.noContent().build())
+                .onErrorResume(e -> ServerResponse.status(404).bodyValue(e.getMessage()));
+    }
 }

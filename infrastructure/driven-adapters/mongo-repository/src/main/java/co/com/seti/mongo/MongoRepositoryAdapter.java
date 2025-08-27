@@ -12,6 +12,7 @@ import co.com.seti.mongo.repository.FranchiseReactiveRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Component
@@ -33,7 +34,13 @@ public class MongoRepositoryAdapter implements FranchiseRepository {
         return repo.existsByName(name);
     }
 
+    public Mono<Franchise> findByName(String name) {
+        return repo.findByName(name).map(this::toDomain);
+    }
 
+    public Flux<Franchise> findAll() {
+        return repo.findAll().map(this::toDomain);
+    }
 
     private Franchise toDomain(FranchiseDocumentEntity d) {
         var branches = d.getBranches() == null ? java.util.List.<Branch>of()

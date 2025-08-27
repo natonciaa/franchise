@@ -1,4 +1,4 @@
-package co.com.seti.usecase.createfranchiseuc;
+package co.com.seti.usecase.createfranchise;
 
 import co.com.seti.model.franchise.Franchise;
 import co.com.seti.model.franchise.gateways.FranchiseRepository;

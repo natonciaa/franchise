@@ -8,4 +8,6 @@ public interface FranchiseRepository {
     Mono<Franchise> save(Franchise f);
     Mono<Franchise> findById(String id);
     Mono<Boolean> existsByName(String name);
+    Mono<Franchise> findByName(String name);
+    Flux<Franchise> findAll();
 }
