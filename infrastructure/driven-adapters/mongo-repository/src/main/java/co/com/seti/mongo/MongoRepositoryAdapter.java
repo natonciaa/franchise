@@ -1,6 +1,5 @@
 package co.com.seti.mongo;
 
-
 import co.com.seti.model.branch.Branch;
 import co.com.seti.model.franchise.Franchise;
 import co.com.seti.model.franchise.gateways.FranchiseRepository;
@@ -9,7 +8,6 @@ import co.com.seti.mongo.entity.BranchDocumentEntity;
 import co.com.seti.mongo.entity.FranchiseDocumentEntity;
 import co.com.seti.mongo.entity.ProductDocumentEntity;
 import co.com.seti.mongo.repository.FranchiseReactiveRepository;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Flux;
@@ -20,7 +18,6 @@ import reactor.core.publisher.Mono;
 public class MongoRepositoryAdapter implements FranchiseRepository {
 
     private final FranchiseReactiveRepository repo;
-    private final ObjectMapper objectMapper;
 
     public Mono<Franchise> save(Franchise f) {
         return repo.save(toDoc(f)).map(this::toDomain);

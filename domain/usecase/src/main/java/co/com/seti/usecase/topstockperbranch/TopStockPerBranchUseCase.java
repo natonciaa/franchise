@@ -1,15 +1,11 @@
 package co.com.seti.usecase.topstockperbranch;
 
-import co.com.seti.model.franchise.Franchise;
 import co.com.seti.model.franchise.gateways.FranchiseRepository;
-import co.com.seti.model.product.Product;
 import lombok.RequiredArgsConstructor;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-
-import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.UUID;
+
 
 @RequiredArgsConstructor
 public class TopStockPerBranchUseCase {
@@ -18,6 +14,7 @@ public class TopStockPerBranchUseCase {
 
     public Flux<TopProductPerBranch> getTopStock(String franId) {
         return repo.findById(franId)
+                .switchIfEmpty(Mono.error(new IllegalArgumentException("Franquicia no encontrada")))
                 .doOnNext(fr -> System.out.println("Franquicia encontrada: " + fr.getId()))
                 .flatMapMany(fr -> Flux.fromIterable(fr.getBranches()))
                 .flatMap(branch -> {
