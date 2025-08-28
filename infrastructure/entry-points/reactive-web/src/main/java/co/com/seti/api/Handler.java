@@ -1,6 +1,7 @@
 package co.com.seti.api;
 
 import co.com.seti.api.dto.AddProductReq;
+import co.com.seti.api.dto.UpdateNameReq;
 import co.com.seti.api.dto.UpdateStockReq;
 import co.com.seti.model.branch.Branch;
 import co.com.seti.model.franchise.Franchise;
@@ -9,6 +10,9 @@ import co.com.seti.usecase.addproduct.AddProductUseCase;
 import co.com.seti.usecase.createfranchise.CreateFranchiseUseCase;
 import co.com.seti.usecase.deleteproduct.DeleteProductUseCase;
 import co.com.seti.usecase.topstockperbranch.TopStockPerBranchUseCase;
+import co.com.seti.usecase.updatebranchname.UpdateBranchNameUseCase;
+import co.com.seti.usecase.updatefranchisename.UpdateFranchiseNameUseCase;
+import co.com.seti.usecase.updateproductname.UpdateProductNameUseCase;
 import co.com.seti.usecase.updatestock.UpdateStockUseCase;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,6 +32,9 @@ public class Handler {
     private final DeleteProductUseCase deleteProductUC;
     private final UpdateStockUseCase updateStockUC;
     private final TopStockPerBranchUseCase  topStockPerBranchUC;
+    private final UpdateBranchNameUseCase updateBranchNameUC;
+    private final UpdateProductNameUseCase updateProductNameUC;
+    private final UpdateFranchiseNameUseCase updateFranchiseNameUC;
 
     public Mono<ServerResponse> create(ServerRequest req) {
         return req.bodyToMono(Franchise.class)
@@ -82,5 +89,32 @@ public class Handler {
                 .flatMap(list -> ServerResponse.ok().bodyValue(list))
                 .onErrorResume(e -> ServerResponse.status(404).bodyValue(e.getMessage()));
 
+    }
+
+    public Mono<ServerResponse> updateFranchiseName(ServerRequest req) {
+        String fid = req.pathVariable("franchiseId");
+        return req.bodyToMono(UpdateNameReq.class)
+                .flatMap(r -> updateFranchiseNameUC.update(fid, r.name()))
+                .flatMap(fr -> ServerResponse.ok().bodyValue(fr))
+                .onErrorResume(e -> ServerResponse.badRequest().bodyValue(e.getMessage()));
+    }
+
+    public Mono<ServerResponse> updateBranchName(ServerRequest req) {
+        String fid = req.pathVariable("franchiseId");
+        String bid = req.pathVariable("branchId");
+        return req.bodyToMono(UpdateNameReq.class)
+                .flatMap(r -> updateBranchNameUC.update(fid, bid, r.name()))
+                .flatMap(fr -> ServerResponse.ok().bodyValue(fr))
+                .onErrorResume(e -> ServerResponse.badRequest().bodyValue(e.getMessage()));
+    }
+
+    public Mono<ServerResponse> updateProductName(ServerRequest req) {
+        String fid = req.pathVariable("franchiseId");
+        String bid = req.pathVariable("branchId");
+        String pid = req.pathVariable("productId");
+        return req.bodyToMono(UpdateNameReq.class)
+                .flatMap(r -> updateProductNameUC.update(fid, bid, pid, r.name()))
+                .flatMap(fr -> ServerResponse.ok().bodyValue(fr))
+                .onErrorResume(e -> ServerResponse.badRequest().bodyValue(e.getMessage()));
     }
 }
