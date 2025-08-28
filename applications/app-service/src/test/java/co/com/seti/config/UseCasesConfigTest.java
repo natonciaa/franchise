@@ -1,11 +1,25 @@
 package co.com.seti.config;
 
+import co.com.seti.mongo.repository.FranchiseReactiveRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.mock;
+
+import co.com.seti.model.franchise.gateways.FranchiseRepository; // Import the interface
+import co.com.seti.mongo.repository.FranchiseReactiveRepository;
+import org.junit.jupiter.api.Test;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.mock;
 
 public class UseCasesConfigTest {
 
@@ -22,13 +36,23 @@ public class UseCasesConfigTest {
                 }
             }
 
-            assertTrue(useCaseBeanFound, "No beans ending with 'Use Case' were found");
+            assertTrue(useCaseBeanFound, "No beans ending with 'UseCase' were found");
         }
     }
 
     @Configuration
     @Import(UseCasesConfig.class)
     static class TestConfig {
+
+        @Bean
+        public FranchiseRepository franchiseRepository() {
+            return mock(FranchiseRepository.class);
+        }
+
+        @Bean
+        public FranchiseReactiveRepository franchiseReactiveRepository() {
+            return mock(FranchiseReactiveRepository.class);
+        }
 
         @Bean
         public MyUseCase myUseCase() {
