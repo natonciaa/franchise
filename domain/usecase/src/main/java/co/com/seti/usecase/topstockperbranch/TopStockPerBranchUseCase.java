@@ -23,7 +23,7 @@ public class TopStockPerBranchUseCase {
                 .flatMap(branch -> {
                     var top = branch.getProducts().stream().max(Comparator.comparingInt(product -> product.getStock()));
                     return Mono.zip(Mono.just(branch), Mono.justOrEmpty(top))
-                            .map(tuple -> new TopProductPerBranch(tuple.getT1().getName(), tuple.getT2().getName()tuple.getT2().getStock()));
+                            .map(tuple -> new TopProductPerBranch(tuple.getT1().getName(), tuple.getT2().getName(),tuple.getT2().getStock()));
                 });
 
     }
