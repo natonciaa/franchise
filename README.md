@@ -32,3 +32,10 @@ docker run -d --name mongo -p 27017:27017 mongo:6
 3. Compilar y ejecutar
 ./gradlew build
 ./gradlew bootRun
+4. Coleccion Postman 
+
+Se incluye la colección para probar todos los endpoints del proyecto.
+
+1. Descarga el archivo  franchises.postman_collection.json ubicado en la raiz del proyecto
+2. Importa la colección en Postman.
+3. Ajustar las variables `franchiseId`, `branchId` y `productId` según los objetos creados.

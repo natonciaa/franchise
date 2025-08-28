@@ -1,0 +1,92 @@
+{
+  "info": {
+    "name": "Franchises API",
+    "_postman_id": "12345678-abcd-efgh-ijkl-987654321000",
+    "description": "Colección de pruebas para el proyecto de franquicias con Spring WebFlux.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Crear Franquicia",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": { "raw": "http://localhost:8080/franchises", "protocol": "http", "host": ["localhost"], "port": "8080", "path": ["franchises"] },
+        "body": { "mode": "raw", "raw": "{ \"name\": \"Franquicia1\" }" }
+      }
+    },
+    {
+      "name": "Agregar Sucursal",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": { "raw": "http://localhost:8080/franchises/{{franchiseId}}/branches", "protocol": "http", "host": ["localhost"], "port": "8080", "path": ["franchises","{{franchiseId}}","branches"] },
+        "body": { "mode": "raw", "raw": "{ \"name\": \"Sucursal1\" }" }
+      }
+    },
+    {
+      "name": "Agregar Producto",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": { "raw": "http://localhost:8080/franchises/{{franchiseId}}/branches/{{branchId}}/products", "protocol": "http", "host": ["localhost"], "port": "8080", "path": ["franchises","{{franchiseId}}","branches","{{branchId}}","products"] },
+        "body": { "mode": "raw", "raw": "{ \"name\": \"Producto1\", \"stock\": 10 }" }
+      }
+    },
+    {
+      "name": "Eliminar Producto",
+      "request": {
+        "method": "DELETE",
+        "url": { "raw": "http://localhost:8080/franchises/{{franchiseId}}/branches/{{branchId}}/products/{{productId}}", "protocol": "http", "host": ["localhost"], "port": "8080", "path": ["franchises","{{franchiseId}}","branches","{{branchId}}","products","{{productId}}"] }
+      }
+    },
+    {
+      "name": "Actualizar Stock Producto",
+      "request": {
+        "method": "PATCH",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": { "raw": "http://localhost:8080/franchises/{{franchiseId}}/branches/{{branchId}}/products/{{productId}}/stock", "protocol": "http", "host": ["localhost"], "port": "8080", "path": ["franchises","{{franchiseId}}","branches","{{branchId}}","products","{{productId}}","stock"] },
+        "body": { "mode": "raw", "raw": "{ \"stock\": 25 }" }
+      }
+    },
+    {
+      "name": "Top Producto por Sucursal",
+      "request": {
+        "method": "GET",
+        "url": { "raw": "http://localhost:8080/franchises/{{franchiseId}}/branches/top-product", "protocol": "http", "host": ["localhost"], "port": "8080", "path": ["franchises","{{franchiseId}}","branches","top-product"] }
+      }
+    },
+    {
+      "name": "Actualizar Nombre Franquicia",
+      "request": {
+        "method": "PATCH",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": { "raw": "http://localhost:8080/franchises/{{franchiseId}}/name", "protocol": "http", "host": ["localhost"], "port": "8080", "path": ["franchises","{{franchiseId}}","name"] },
+        "body": { "mode": "raw", "raw": "{ \"name\": \"FranquiciaRenombrada\" }" }
+      }
+    },
+    {
+      "name": "Actualizar Nombre Sucursal",
+      "request": {
+        "method": "PATCH",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": { "raw": "http://localhost:8080/franchises/{{franchiseId}}/branches/{{branchId}}/name", "protocol": "http", "host": ["localhost"], "port": "8080", "path": ["franchises","{{franchiseId}}","branches","{{branchId}}","name"] },
+        "body": { "mode": "raw", "raw": "{ \"name\": \"SucursalRenombrada\" }" }
+      }
+    },
+    {
+      "name": "Actualizar Nombre Producto",
+      "request": {
+        "method": "PATCH",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": { "raw": "http://localhost:8080/franchises/{{franchiseId}}/branches/{{branchId}}/products/{{productId}}/name", "protocol": "http", "host": ["localhost"], "port": "8080", "path": ["franchises","{{franchiseId}}","branches","{{branchId}}","products","{{productId}}","name"] },
+        "body": { "mode": "raw", "raw": "{ \"name\": \"ProductoRenombrado\" }" }
+      }
+    }
+  ],
+  "variable": [
+    { "key": "franchiseId", "value": "REEMPLAZAR_ID_F" },
+    { "key": "branchId", "value": "REEMPLAZAR_ID_B" },
+    { "key": "productId", "value": "REEMPLAZAR_ID_P" }
+  ]
+}
